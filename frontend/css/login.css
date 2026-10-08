@@ -1,0 +1,319 @@
+/* ==========================================================================
+   TOKENS
+   ========================================================================== */
+
+:root {
+    --bg: #ffffff;
+    --bg-art: #f4f4f5;
+    --text: #0a0a0a;
+    --text-muted: #71717a;
+    --border: #e4e4e7;
+    --accent: #e11d48;
+    --accent-hover: #be123c;
+    --radius: 8px;
+    --radius-lg: 10px;
+    --font-title: 'Bricolage Grotesque', system-ui, sans-serif;
+    --font-body: 'Instrument Sans', system-ui, sans-serif;
+    --transition: 0.15s ease;
+}
+
+
+/* ==========================================================================
+   RESET
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--text);
+    background: var(--bg);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+}
+
+
+/* ==========================================================================
+   LAYOUT SPLIT
+   ========================================================================== */
+
+.login {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 100vh;
+}
+
+.login__form-side {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 2rem;
+}
+
+.login__form-wrap {
+    width: 100%;
+    max-width: 400px;
+}
+
+
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
+
+.login__header {
+    margin-bottom: 2rem;
+}
+
+.login__title {
+    font-family: var(--font-title);
+    font-size: 2.25rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+}
+
+.login__subtitle {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+
+/* ==========================================================================
+   FORM
+   ========================================================================== */
+
+.login__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.field__label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text);
+}
+
+.field__input {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    color: var(--text);
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.75rem 1rem;
+    transition: border-color var(--transition), box-shadow var(--transition);
+    outline: none;
+    width: 100%;
+}
+
+.field__input::placeholder {
+    color: #a1a1aa;
+}
+
+.field__input:hover {
+    border-color: #d4d4d8;
+}
+
+.field__input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.12);
+}
+
+
+/* ==========================================================================
+   CHECKBOX + LINK
+   ========================================================================== */
+
+.form-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    margin-top: -0.25rem;
+}
+
+.check {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.check__input {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: #ffffff;
+    cursor: pointer;
+    display: grid;
+    place-content: center;
+    transition: var(--transition);
+}
+
+.check__input:hover {
+    border-color: var(--accent);
+}
+
+.check__input:checked {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+.check__input:checked::after {
+    content: "";
+    width: 8px;
+    height: 4px;
+    border-left: 2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
+    transform: rotate(-45deg) translate(1px, -1px);
+}
+
+.check__text {
+    color: var(--text);
+    font-size: 0.85rem;
+}
+
+.form-row__link {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color var(--transition);
+}
+
+.form-row__link:hover {
+    color: var(--accent);
+}
+
+
+/* ==========================================================================
+   BOTONES
+   ========================================================================== */
+
+.btn {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 500;
+    border-radius: var(--radius);
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    border: 1px solid transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    transition: var(--transition);
+    width: 100%;
+}
+
+.btn--primary {
+    background: var(--accent);
+    color: #ffffff;
+    margin-top: 0.35rem;
+}
+
+.btn--primary:hover {
+    background: var(--accent-hover);
+}
+
+.btn--primary:active {
+    transform: scale(0.99);
+}
+
+.btn--ghost {
+    background: #ffffff;
+    color: var(--text);
+    border-color: var(--border);
+}
+
+.btn--ghost:hover {
+    background: #fafafa;
+    border-color: #d4d4d8;
+}
+
+.btn__icon {
+    flex-shrink: 0;
+}
+
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
+.login__footer {
+    margin-top: 1.75rem;
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+.login__footer a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.login__footer a:hover {
+    text-decoration: underline;
+}
+
+
+/* ==========================================================================
+   LADO DERECHO — ILUSTRACIÓN
+   ========================================================================== */
+
+.login__art-side {
+    background: var(--bg-art);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    overflow: hidden;
+}
+
+.login__art-image {
+    width: 100%;
+    max-width: 560px;
+    height: auto;
+    object-fit: contain;
+}
+
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 900px) {
+    .login {
+        grid-template-columns: 1fr;
+    }
+    .login__art-side {
+        display: none;
+        /* En mobile ocultamos la ilustración */
+    }
+    .login__form-side {
+        padding: 2rem 1.25rem;
+    }
+    .login__title {
+        font-size: 1.85rem;
+    }
+}
