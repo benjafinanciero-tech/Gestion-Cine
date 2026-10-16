@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineMax - Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+
+<body>
+
+    <div class="dashboard">
+
+        <!-- ==================== SIDEBAR ==================== -->
+        <aside class="sidebar">
+
+            <div class="sidebar-logo">
+                <img src="assets/logo.png" alt="CineMax">
+            </div>
+
+            <nav class="menu">
+                <a href="#" class="menu-item activo">Inicio</a>
+                <a href="#" class="menu-item">Cartelera</a>
+                <a href="#" class="menu-item">Horarios</a>
+                <a href="#" class="menu-item">Precios</a>
+                <a href="#" class="menu-item">Dulcería</a>
+                <a href="#" class="menu-item">Reportes</a>
+                <a href="#" class="menu-item">Usuarios</a>
+                <a href="#" class="menu-item">Ajustes</a>
+            </nav>
+
+            <div class="sidebar-abajo">
+                <a href="login.html" class="menu-item salir">Cerrar sesión</a>
+            </div>
+
+        </aside>
+
+        <!-- ==================== CONTENIDO ==================== -->
+        <div class="contenido">
+
+            <!-- TOPBAR -->
+            <header class="topbar">
+
+                <input type="text" class="buscador" placeholder="Buscar película, sala, función...">
+
+                <div class="topbar-derecha">
+                    <button class="btn-icono" title="Notificaciones">🔔</button>
+                    <div class="admin">
+                        <span class="admin-punto"></span>
+                        <span>Admin</span>
+                    </div>
+                </div>
+
+            </header>
+
+            <!-- PRINCIPAL -->
+            <main class="principal">
+
+                <h1>Dashboard - Resumen del día</h1>
+                <p class="fecha" id="fechaHoy"></p>
+
+                <!-- STAT CARDS -->
+                <section class="stats">
+
+                    <div class="stat-card">
+                        <span class="stat-label">Entradas de hoy</span>
+                        <span class="stat-valor">4.500</span>
+                        <span class="stat-extra">+12% vs ayer</span>
+                    </div>
+
+                    <div class="stat-card">
+                        <span class="stat-label">Recaudación</span>
+                        <span class="stat-valor">$850.000</span>
+                        <span class="stat-extra">+8% vs ayer</span>
+                    </div>
+
+                    <div class="stat-card">
+                        <span class="stat-label">Ocupación</span>
+                        <span class="stat-valor">82%</span>
+                        <span class="stat-extra">5 salas activas</span>
+                    </div>
+
+                    <div class="stat-card">
+                        <span class="stat-label">Funciones de hoy</span>
+                        <span class="stat-valor">14</span>
+                        <span class="stat-extra">3 próximas</span>
+                    </div>
+
+                </section>
+
+                <!-- DOS COLUMNAS -->
+                <section class="columnas">
+
+                    <!-- PRÓXIMAS FUNCIONES -->
+                    <div class="bloque">
+                        <h2 class="bloque-titulo">Próximas funciones</h2>
+
+                        <ul class="lista-funciones">
+                            <li>
+                                <div class="funcion-info">
+                                    <strong>Sala 1</strong>
+                                    <span>Dune: Parte Dos</span>
+                                </div>
+                                <div class="funcion-hora">20:00 hs</div>
+                                <div class="funcion-ocupacion">80%</div>
+                            </li>
+
+                            <li>
+                                <div class="funcion-info">
+                                    <strong>Sala 2</strong>
+                                    <span>Deadpool & Wolverine</span>
+                                </div>
+                                <div class="funcion-hora">20:30 hs</div>
+                                <div class="funcion-ocupacion">65%</div>
+                            </li>
+
+                            <li>
+                                <div class="funcion-info">
+                                    <strong>Sala 3</strong>
+                                    <span>Intensamente 2</span>
+                                </div>
+                                <div class="funcion-hora">21:00 hs</div>
+                                <div class="funcion-ocupacion">92%</div>
+                            </li>
+
+                            <li>
+                                <div class="funcion-info">
+                                    <strong>Sala 4</strong>
+                                    <span>Alien: Romulus</span>
+                                </div>
+                                <div class="funcion-hora">21:15 hs</div>
+                                <div class="funcion-ocupacion">45%</div>
+                            </li>
+
+                            <li>
+                                <div class="funcion-info">
+                                    <strong>Sala 5</strong>
+                                    <span>Gladiador II</span>
+                                </div>
+                                <div class="funcion-hora">22:00 hs</div>
+                                <div class="funcion-ocupacion">70%</div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- ALERTAS -->
+                    <div class="bloque">
+                        <h2 class="bloque-titulo">Alertas del sistema</h2>
+
+                        <ul class="lista-alertas">
+                            <li class="alerta alerta-error">
+                                <strong>Proyector sala 3</strong>
+                                <span>Mantenimiento pendiente</span>
+                            </li>
+
+                            <li class="alerta alerta-warn">
+                                <strong>Stock dulcería</strong>
+                                <span>Pochoclos por debajo del mínimo</span>
+                            </li>
+
+                            <li class="alerta alerta-info">
+                                <strong>Backup diario</strong>
+                                <span>Última copia hace 6 horas</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                </section>
+
+            </main>
+
+        </div>
+
+    </div>
+
+    <script>
+        // Muestra la fecha actual arriba del dashboard
+        const fecha = new Date();
+        const opciones = {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        };
+        document.getElementById('fechaHoy').textContent =
+            fecha.toLocaleDateString('es-AR', opciones);
+    </script>
+
+</body>
+
+</html>

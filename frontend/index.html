@@ -4,64 +4,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CineMa</title>
+    <title>CineMax - Inicio</title>
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-    <div class="fondo">
-
-
-        <div class="caja-login">
-
-
-            <img src="assets/logo.png" alt="CineMax" class="logo">
-            <p class="subtitulo">Ingresa tus datos para entrar al sistema</p>
-
-
-            <form action="#" method="POST">
-
-                <div class="campo">
-                    <label for="usuario">Usuario</label>
-                    <input type="text" id="usuario" name="usuario" placeholder="Ingresa tu usuario" required>
-                </div>
-
-                <div class="campo">
-                    <label for="contraseña">Contraseña</label>
-                    <input type="password" id="contraseña" name="contraseña" placeholder="Ingresa tu contraseña" required>
-                </div>
-
-                <div class="opciones">
-                    <label class="recordarme">
-                        <input type="checkbox" name="recordarme">
-                        Recordarme
-                    </label>
-                    <a href="#">¿Olvidaste tu contraseña?</a>
-                </div>
-
-                <button type="submit" class="btn-ingresar">Iniciar Sesion</button>
-
-                <div class="separador">
-                    <span>o</span>
-                </div>
-
-                <button type="button" class="btn-google">
-          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.76h3.56c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.56-2.76c-.99.66-2.25 1.06-3.72 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A11 11 0 0 0 12 23z"/>
-            <path fill="#FBBC05" d="M5.84 14.11a6.6 6.6 0 0 1 0-4.22V7.05H2.18a11 11 0 0 0 0 9.9l3.66-2.84z"/>
-            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1a11 11 0 0 0-9.82 6.05l3.66 2.84C6.71 7.31 9.14 5.38 12 5.38z"/>
-          </svg>
-          <span>Continuar con Google</span>
-        </button>
-
-            </form>
-
+    <!-- ==================== HEADER ==================== -->
+    <header class="header">
+        <div class="header-izquierda">
+            <a href="index.html" class="logo-link">
+                <img src="assets/logo.png" alt="CineMax" class="logo">
+            </a>
         </div>
 
+        <nav class="nav">
+            <a href="#" class="nav-link activo">Inicio</a>
+            <a href="#" class="nav-link">Catálogo</a>
+            <a href="#" class="nav-link">Próximos estrenos</a>
+            <a href="#" class="nav-link">Antojos</a>
+            <a href="login.html" class="nav-link">Administración</a>
+        </nav>
+
+        <div class="header-derecha">
+            <a href="login.html" class="btn-login">Iniciar Sesión</a>
+            <button class="btn-hamburguesa" id="btnHamburguesa">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- ==================== MENU MOBILE ==================== -->
+    <div class="menu-mobile" id="menuMobile">
+        <a href="#" class="menu-mobile-link">Inicio</a>
+        <a href="#" class="menu-mobile-link">Catálogo</a>
+        <a href="#" class="menu-mobile-link">Próximos estrenos</a>
+        <a href="#" class="menu-mobile-link">Antojos</a>
+        <a href="login.html" class="menu-mobile-link">Administración</a>
+        <a href="login.html" class="menu-mobile-link destacado">Iniciar Sesión</a>
     </div>
+
+    <!-- ==================== MAIN ==================== -->
+    <main>
+
+        <!-- ---------- CARRUSEL ---------- -->
+        <section class="carrusel">
+            <button class="flecha flecha-izq" id="flechaIzq">&#10094;</button>
+
+            <div class="slides" id="slides">
+                <!-- Slide 1 -->
+                <div class="slide activo">
+                    <img src="https://imgs.search.brave.com/xQVOCs76yjojEuyP82RYEf-suWdAQ_viZpZkvtJCTZQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJzLmNvbS9p/bWFnZXMvdGh1bWJu/YWlsL2dyYXlzY2Fs/ZS1oYWxmLWZhY2Ut/YmVzdC1hdmVuZ2Vy/cy1waG90by03b3Ey/Z2d1ZXdkenh6eGE5/LmpwZw" alt="Dune: Parte Dos">
+                    <div class="slide-info">
+                        <h2>Dune: Parte Dos</h2>
+                        <p>La saga continúa. Paul Atreides se une a los Fremen para vengar la conspiración que destruyó a su familia.</p>
+                        <a href="#" class="btn-comprar">Comprar entradas</a>
+                    </div>
+                </div>
+
+                <!-- Slide 2 -->
+                <div class="slide">
+                    <img src="https://imgs.search.brave.com/JE7PylLwFuybeb6mLbzOw3-kOdA2MUKqE1ga-HwicU0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pLnJl/ZGQuaXQvN293amxj/NzVldTdoMS5qcGc" alt="Deadpool & Wolverine">
+                    <div class="slide-info">
+                        <h2>Deadpool & Wolverine</h2>
+                        <p>Dos antihéroes se unen en una aventura explosiva llena de acción y humor sin filtro.</p>
+                        <a href="#" class="btn-comprar">Comprar entradas</a>
+                    </div>
+                </div>
+
+                <!-- Slide 3 -->
+                <div class="slide">
+                    <img src="https://imgs.search.brave.com/mLcsj6Bp4ijTXDzyC1tFR382HzLCJPmA29oOEAAxsL0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJhY2Nlc3Mu/Y29tL2Z1bGwvMjI4/NDU0NzguanBn" alt="Intensamente 2">
+                    <div class="slide-info">
+                        <h2>Intensamente 2</h2>
+                        <p>Riley entra en la adolescencia y nuevas emociones llegan a su mente. Una aventura para toda la familia.</p>
+                        <a href="#" class="btn-comprar">Comprar entradas</a>
+                    </div>
+                </div>
+            </div>
+
+            <button class="flecha flecha-der" id="flechaDer">&#10095;</button>
+
+            <!-- Puntitos indicadores -->
+            <div class="puntos" id="puntos">
+                <span class="punto activo"></span>
+                <span class="punto"></span>
+                <span class="punto"></span>
+            </div>
+        </section>
+
+        <!-- ---------- INFO SOBRE EL CINE ---------- -->
+        <section class="info">
+            <h2 class="info-titulo">Sobre CineMax</h2>
+
+            <div class="info-grid">
+                <div class="info-bloque">
+                    <h3>Nuestras salas</h3>
+                    <p>5 salas equipadas con proyección 4K, sonido Dolby Atmos y butacas reclinables para que disfrutes al máximo.</p>
+                </div>
+
+                <div class="info-bloque">
+                    <h3>Confitería</h3>
+                    <p>Pochoclos recién hechos, bebidas ilimitadas y combos para compartir. Todo lo que necesitás para la función.</p>
+                </div>
+
+                <div class="info-bloque">
+                    <h3>Promociones</h3>
+                    <p>Martes y miércoles 2x1 en todas las funciones. Descuentos para estudiantes y jubilados todos los días.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="footer">
+        <div class="footer-contenido">
+            <div class="footer-col">
+                <img src="assets/logo.png" alt="CineMax" class="footer-logo">
+                <p>Grandes historias,<br>en una sola pantalla.</p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Navegación</h4>
+                <a href="#">Inicio</a>
+                <a href="#">Catálogo</a>
+                <a href="#">Próximos estrenos</a>
+                <a href="#">Antojos</a>
+            </div>
+
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <p>Av. Siempre Viva 123</p>
+                <p>info@cinemax.com</p>
+                <p>(011) 1234-5678</p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Redes</h4>
+                <a href="#">Instagram</a>
+                <a href="#">Facebook</a>
+                <a href="#">X / Twitter</a>
+                <a href="#">YouTube</a>
+            </div>
+        </div>
+
+        <div class="footer-abajo">
+            <p>&copy; 2025 CineMax. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
 
 </body>
 
