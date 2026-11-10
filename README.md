@@ -87,14 +87,3 @@ Los íconos de la interfaz usan la fuente Font Awesome Free (licencia CC BY 4.0)
 | GET    | /api/usuarios            | Lista de usuarios (sin contraseñas)                |
 | POST   | /api/usuarios            | Agrega un usuario                                  |
 | DELETE | /api/usuarios/<id>       | Elimina un usuario                                 |
-
-## Manual del proyecto
-
-`documentacion/Manual-CineMax.pdf` es un manual tecnico de 34 paginas que explica archivo por archivo como funciona el sistema: cada funcion del backend y del JavaScript, la logica de los CSV, las decisiones de diseno, los problemas resueltos, preguntas probables del profesor y un glosario.
-
-Se puede volver a generar con:
-
-```
-pip install reportlab
-python documentacion/generar_manual.py
-```
