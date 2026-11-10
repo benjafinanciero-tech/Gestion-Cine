@@ -1,4 +1,4 @@
-/* ==================== CONFIGURACION GENERAL ==================== */
+
 
 * {
     margin: 0;
@@ -10,9 +10,6 @@ body {
     font-family: 'Inter', sans-serif;
     color: #f5f5f5;
 }
-
-
-/* ==================== FONDO CON LA IMAGEN ==================== */
 
 .fondo {
     min-height: 100vh;
@@ -39,9 +36,6 @@ body {
     pointer-events: none;
 }
 
-
-/* ==================== CAJA DEL LOGIN ==================== */
-
 .caja-login {
     position: relative;
     z-index: 1;
@@ -54,9 +48,6 @@ body {
     border-radius: 16px;
     padding: 2.5rem 2rem;
 }
-
-
-/* ==================== LOGO Y TITULOS ==================== */
 
 .logo {
     display: block;
@@ -81,9 +72,6 @@ body {
     letter-spacing: 0.15em;
     margin-bottom: 2rem;
 }
-
-
-/* ==================== CAMPOS DEL FORMULARIO ==================== */
 
 .campo {
     margin-bottom: 1rem;
@@ -118,9 +106,6 @@ body {
     background: rgba(220, 38, 38, 0.05);
 }
 
-
-/* ==================== OPCIONES ==================== */
-
 .opciones {
     display: flex;
     justify-content: space-between;
@@ -149,9 +134,6 @@ body {
 .opciones a:hover {
     color: #dc2626;
 }
-
-
-/* ==================== BOTONES ==================== */
 
 .btn-ingresar {
     width: 100%;
@@ -212,8 +194,24 @@ body {
     background: rgba(255, 255, 255, 0.05);
 }
 
+.btn-servidor {
+    display: none;
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #ffffff;
+    background: #dc2626;
+    border-radius: 10px;
+    padding: 0.9rem;
+    text-align: center;
+    text-decoration: none;
+    margin-bottom: 1rem;
+}
 
-/* ==================== MENSAJE DE ERROR ==================== */
+.btn-servidor.visible {
+    display: block;
+}
 
 .mensaje-error {
     display: none;
@@ -227,9 +225,6 @@ body {
     text-align: center;
 }
 
-
-/* ==================== RESPONSIVE ==================== */
-
 @media (max-width: 900px) {
     .fondo {
         justify-content: center;
@@ -241,5 +236,95 @@ body {
     }
     .caja-login {
         padding: 2rem 1.5rem;
+    }
+}
+
+.estado-servidor {
+    display: block;
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-align: center;
+    color: #a1a1aa;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    padding: 0.55rem 0.75rem;
+    margin-bottom: 1.25rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.estado-servidor:hover {
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.estado-servidor.conectado {
+    color: #22c55e;
+    background: rgba(34, 197, 94, 0.1);
+    border-color: rgba(34, 197, 94, 0.35);
+}
+
+.estado-servidor.desconectado {
+    color: #f87171;
+    background: rgba(220, 38, 38, 0.12);
+    border-color: rgba(220, 38, 38, 0.4);
+}
+
+@media (max-width: 600px) {
+    .fondo {
+        align-items: flex-start;
+        justify-content: center;
+        padding: 1.5rem 1rem 2rem;
+        background-attachment: scroll;
+    }
+    .caja-login {
+        max-width: 100%;
+        padding: 1.6rem 1.25rem;
+        border-radius: 14px;
+    }
+    .logo {
+        width: 100px;
+        margin-bottom: 1rem;
+    }
+    .caja-login h2 {
+        font-size: 1.45rem;
+        letter-spacing: 0.03em;
+    }
+    .subtitulo {
+        font-size: 0.66rem;
+        letter-spacing: 0.1em;
+        margin-bottom: 1.4rem;
+    }
+    .estado-servidor {
+        margin-bottom: 1rem;
+    }
+    .campo {
+        margin-bottom: 0.8rem;
+    }
+    .campo input {
+        font-size: 1rem;
+        padding: 0.75rem 0.85rem;
+    }
+    .opciones {
+        font-size: 0.74rem;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+        gap: 0.5rem 0.9rem;
+    }
+    .btn-ingresar {
+        padding: 0.9rem;
+    }
+    .separador {
+        margin: 1rem 0;
+    }
+    .btn-google {
+        padding: 0.8rem;
+        font-size: 0.85rem;
+    }
+    .btn-servidor,
+    .mensaje-error {
+        font-size: 0.78rem;
     }
 }

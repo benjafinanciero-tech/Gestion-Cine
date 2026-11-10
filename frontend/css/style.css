@@ -1,4 +1,4 @@
-/* ==================== CONFIGURACION GENERAL ==================== */
+
 
 * {
     margin: 0;
@@ -22,9 +22,6 @@ img {
     max-width: 100%;
     display: block;
 }
-
-
-/* ==================== HEADER ==================== */
 
 .header {
     position: fixed;
@@ -50,9 +47,6 @@ img {
 .logo {
     width: 90px;
 }
-
-
-/* Nav central */
 
 .nav {
     display: flex;
@@ -87,9 +81,6 @@ img {
     background: #dc2626;
 }
 
-
-/* Lado derecho */
-
 .header-derecha {
     display: flex;
     align-items: center;
@@ -112,8 +103,42 @@ img {
     background: #b91c1c;
 }
 
+.btn-login.oculto {
+    display: none;
+}
 
-/* Botón hamburguesa (oculto en desktop) */
+.usuario-chip {
+    display: none;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #f5f5f5;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(220, 38, 38, 0.45);
+    padding: 0.65rem 1rem;
+    border-radius: 8px;
+}
+
+.usuario-chip.visible {
+    display: inline-flex;
+}
+
+.btn-salir {
+    display: none;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: #a1a1aa;
+    text-decoration: underline;
+}
+
+.btn-salir.visible {
+    display: inline;
+}
+
+.btn-salir:hover {
+    color: #f5f5f5;
+}
 
 .btn-hamburguesa {
     display: none;
@@ -135,9 +160,6 @@ img {
     border-radius: 2px;
     transition: 0.2s;
 }
-
-
-/* ==================== MENU MOBILE ==================== */
 
 .menu-mobile {
     display: none;
@@ -180,8 +202,19 @@ img {
     letter-spacing: 0.05em;
 }
 
+.menu-mobile-usuario {
+    display: none;
+    padding: 0.5rem 1rem 0.75rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #f5f5f5;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    margin-bottom: 0.5rem;
+}
 
-/* ==================== CARRUSEL ==================== */
+.menu-mobile-usuario.visible {
+    display: block;
+}
 
 .carrusel {
     position: relative;
@@ -205,7 +238,7 @@ img {
     width: 100%;
     height: 100%;
     opacity: 0;
-    transition: opacity 0.6s ease;
+    transition: opacity 0.4s ease;
     pointer-events: none;
 }
 
@@ -218,10 +251,14 @@ img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transform: scale(1.07);
+    transition: transform 8s linear;
+    background: #111111;
 }
 
-
-/* Degradado oscuro sobre la imagen */
+.slide.activo img {
+    transform: scale(1);
+}
 
 .slide::after {
     content: "";
@@ -234,9 +271,16 @@ img {
     position: absolute;
     top: 50%;
     left: 5rem;
-    transform: translateY(-50%);
+    transform: translateY(-45%);
     max-width: 500px;
     z-index: 2;
+    opacity: 0;
+    transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.slide.activo .slide-info {
+    opacity: 1;
+    transform: translateY(-50%);
 }
 
 .slide-info h2 {
@@ -273,9 +317,6 @@ img {
     background: #b91c1c;
 }
 
-
-/* Flechas */
-
 .flecha {
     position: absolute;
     top: 50%;
@@ -308,9 +349,6 @@ img {
     right: 1.5rem;
 }
 
-
-/* Puntos indicadores */
-
 .puntos {
     position: absolute;
     bottom: 2rem;
@@ -335,9 +373,6 @@ img {
     width: 28px;
     border-radius: 6px;
 }
-
-
-/* ==================== INFO ==================== */
 
 .info {
     padding: 5rem 2rem;
@@ -384,9 +419,6 @@ img {
     color: #a1a1aa;
     line-height: 1.6;
 }
-
-
-/* ==================== FOOTER ==================== */
 
 .footer {
     background: #111111;
@@ -448,9 +480,6 @@ img {
     color: #71717a;
 }
 
-
-/* ==================== RESPONSIVE ==================== */
-
 @media (max-width: 900px) {
     .header {
         padding: 0.85rem 1.25rem;
@@ -459,6 +488,12 @@ img {
         display: none;
     }
     .btn-login {
+        display: none;
+    }
+    .usuario-chip.visible {
+        display: none;
+    }
+    .btn-salir.visible {
         display: none;
     }
     .btn-hamburguesa {
@@ -471,7 +506,7 @@ img {
     .slide-info {
         left: 1.5rem;
         right: 1.5rem;
-        max-width: none;
+        max-width: 30rem;
     }
     .slide-info h2 {
         font-size: 2rem;
@@ -480,15 +515,18 @@ img {
         font-size: 0.9rem;
     }
     .flecha {
+        top: auto;
+        bottom: 1.5rem;
+        transform: none;
         width: 40px;
         height: 40px;
         font-size: 1rem;
     }
     .flecha-izq {
-        left: 0.75rem;
+        left: 1.25rem;
     }
     .flecha-der {
-        right: 0.75rem;
+        right: 1.25rem;
     }
     .info-grid {
         grid-template-columns: 1fr;
@@ -508,5 +546,45 @@ img {
 @media (max-width: 500px) {
     .footer-contenido {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 380px) {
+    .slide-info h2 {
+        font-size: 1.68rem;
+    }
+    .slide-info p {
+        font-size: 0.85rem;
+    }
+    .flecha {
+        width: 36px;
+        height: 36px;
+    }
+}
+
+a:focus-visible,
+button:focus-visible {
+    outline: 2px solid #dc2626;
+    outline-offset: 3px;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #2a2a2e;
+    border: 2px solid #0a0a0a;
+    border-radius: 8px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .slide img {
+        transform: none;
+        transition: none;
     }
 }

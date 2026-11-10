@@ -1,0 +1,38 @@
+@font-face {
+    font-family: 'IconosCine';
+    src: url('../assets/fonts/fa-solid-900.woff2') format('woff2');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+.icono {
+    font-family: 'IconosCine';
+    font-weight: 900;
+    font-style: normal;
+    display: inline-block;
+    line-height: 1;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icono-campana::before {
+    content: "\f0f3";
+}
+
+.icono-entrada::before {
+    content: "\f3ff";
+}
+
+.icono-dinero::before {
+    content: "\f81d";
+}
+
+.icono-butaca::before {
+    content: "\f6c0";
+}
+
+.icono-pelicula::before {
+    content: "\f008";
+}

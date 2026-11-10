@@ -7,11 +7,12 @@
     <title>CineMax - Inicio</title>
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <meta name="theme-color" content="#0a0a0a">
 </head>
 
 <body>
 
-    <!-- ==================== HEADER ==================== -->
     <header class="header">
         <div class="header-izquierda">
             <a href="index.html" class="logo-link">
@@ -21,14 +22,16 @@
 
         <nav class="nav">
             <a href="#" class="nav-link activo">Inicio</a>
-            <a href="#" class="nav-link">Catálogo</a>
-            <a href="#" class="nav-link">Próximos estrenos</a>
+            <a href="#" class="nav-link">Catalogo</a>
+            <a href="#" class="nav-link">Proximos estrenos</a>
             <a href="#" class="nav-link">Antojos</a>
-            <a href="login.html" class="nav-link">Administración</a>
+            <a href="login.html" class="nav-link">Administracion</a>
         </nav>
 
         <div class="header-derecha">
-            <a href="login.html" class="btn-login">Iniciar Sesión</a>
+            <span class="usuario-chip" id="usuarioChip"></span>
+            <a href="login.html" class="btn-login" id="btnLogin">Iniciar Sesion</a>
+            <a href="#" class="btn-salir" id="btnSalir">Salir</a>
             <button class="btn-hamburguesa" id="btnHamburguesa">
                 <span></span>
                 <span></span>
@@ -37,47 +40,43 @@
         </div>
     </header>
 
-    <!-- ==================== MENU MOBILE ==================== -->
     <div class="menu-mobile" id="menuMobile">
+        <span class="menu-mobile-usuario" id="menuUsuario"></span>
         <a href="#" class="menu-mobile-link">Inicio</a>
-        <a href="#" class="menu-mobile-link">Catálogo</a>
-        <a href="#" class="menu-mobile-link">Próximos estrenos</a>
+        <a href="#" class="menu-mobile-link">Catalogo</a>
+        <a href="#" class="menu-mobile-link">Proximos estrenos</a>
         <a href="#" class="menu-mobile-link">Antojos</a>
-        <a href="login.html" class="menu-mobile-link">Administración</a>
-        <a href="login.html" class="menu-mobile-link destacado">Iniciar Sesión</a>
+        <a href="login.html" class="menu-mobile-link">Administracion</a>
+        <a href="login.html" class="menu-mobile-link destacado" id="menuAccion">Iniciar Sesion</a>
     </div>
 
-    <!-- ==================== MAIN ==================== -->
     <main>
 
-        <!-- ---------- CARRUSEL ---------- -->
         <section class="carrusel">
             <button class="flecha flecha-izq" id="flechaIzq">&#10094;</button>
 
             <div class="slides" id="slides">
-                <!-- Slide 1 -->
+
                 <div class="slide activo">
-                    <img src="https://imgs.search.brave.com/xQVOCs76yjojEuyP82RYEf-suWdAQ_viZpZkvtJCTZQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJzLmNvbS9p/bWFnZXMvdGh1bWJu/YWlsL2dyYXlzY2Fs/ZS1oYWxmLWZhY2Ut/YmVzdC1hdmVuZ2Vy/cy1waG90by03b3Ey/Z2d1ZXdkenh6eGE5/LmpwZw" alt="Dune: Parte Dos">
+                    <img src="assets/slide-1.jpg" alt="Dune: Parte Dos">
                     <div class="slide-info">
                         <h2>Dune: Parte Dos</h2>
-                        <p>La saga continúa. Paul Atreides se une a los Fremen para vengar la conspiración que destruyó a su familia.</p>
+                        <p>La saga continua. Paul Atreides se une a los Fremen para vengar la conspiracion que destruyo a su familia.</p>
                         <a href="#" class="btn-comprar">Comprar entradas</a>
                     </div>
                 </div>
 
-                <!-- Slide 2 -->
                 <div class="slide">
-                    <img src="https://imgs.search.brave.com/JE7PylLwFuybeb6mLbzOw3-kOdA2MUKqE1ga-HwicU0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pLnJl/ZGQuaXQvN293amxj/NzVldTdoMS5qcGc" alt="Deadpool & Wolverine">
+                    <img src="assets/slide-2.jpg" alt="Deadpool & Wolverine">
                     <div class="slide-info">
                         <h2>Deadpool & Wolverine</h2>
-                        <p>Dos antihéroes se unen en una aventura explosiva llena de acción y humor sin filtro.</p>
+                        <p>Dos antiheroes se unen en una aventura explosiva llena de accion y humor sin filtro.</p>
                         <a href="#" class="btn-comprar">Comprar entradas</a>
                     </div>
                 </div>
 
-                <!-- Slide 3 -->
                 <div class="slide">
-                    <img src="https://imgs.search.brave.com/mLcsj6Bp4ijTXDzyC1tFR382HzLCJPmA29oOEAAxsL0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJhY2Nlc3Mu/Y29tL2Z1bGwvMjI4/NDU0NzguanBn" alt="Intensamente 2">
+                    <img src="assets/slide-3.jpg" alt="Intensamente 2">
                     <div class="slide-info">
                         <h2>Intensamente 2</h2>
                         <p>Riley entra en la adolescencia y nuevas emociones llegan a su mente. Una aventura para toda la familia.</p>
@@ -88,7 +87,6 @@
 
             <button class="flecha flecha-der" id="flechaDer">&#10095;</button>
 
-            <!-- Puntitos indicadores -->
             <div class="puntos" id="puntos">
                 <span class="punto activo"></span>
                 <span class="punto"></span>
@@ -96,31 +94,29 @@
             </div>
         </section>
 
-        <!-- ---------- INFO SOBRE EL CINE ---------- -->
         <section class="info">
             <h2 class="info-titulo">Sobre CineMax</h2>
 
             <div class="info-grid">
                 <div class="info-bloque">
                     <h3>Nuestras salas</h3>
-                    <p>5 salas equipadas con proyección 4K, sonido Dolby Atmos y butacas reclinables para que disfrutes al máximo.</p>
+                    <p>5 salas equipadas con proyeccion 4K, sonido Dolby Atmos y butacas reclinables para que disfrutes al maximo.</p>
                 </div>
 
                 <div class="info-bloque">
-                    <h3>Confitería</h3>
-                    <p>Pochoclos recién hechos, bebidas ilimitadas y combos para compartir. Todo lo que necesitás para la función.</p>
+                    <h3>Confiteria</h3>
+                    <p>Pochoclos recien hechos, bebidas ilimitadas y combos para compartir. Todo lo que necesitas para la funcion.</p>
                 </div>
 
                 <div class="info-bloque">
                     <h3>Promociones</h3>
-                    <p>Martes y miércoles 2x1 en todas las funciones. Descuentos para estudiantes y jubilados todos los días.</p>
+                    <p>Martes y miercoles 2x1 en todas las funciones. Descuentos para estudiantes y jubilados todos los dias.</p>
                 </div>
             </div>
         </section>
 
     </main>
 
-    <!-- ==================== FOOTER ==================== -->
     <footer class="footer">
         <div class="footer-contenido">
             <div class="footer-col">
@@ -129,10 +125,10 @@
             </div>
 
             <div class="footer-col">
-                <h4>Navegación</h4>
+                <h4>Navegacion</h4>
                 <a href="#">Inicio</a>
-                <a href="#">Catálogo</a>
-                <a href="#">Próximos estrenos</a>
+                <a href="#">Catalogo</a>
+                <a href="#">Proximos estrenos</a>
                 <a href="#">Antojos</a>
             </div>
 

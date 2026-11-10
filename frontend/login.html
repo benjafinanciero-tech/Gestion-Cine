@@ -4,9 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CineMax - Iniciar Sesión</title>
+    <title>CineMax - Iniciar Sesion</title>
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/login.css">
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <meta name="theme-color" content="#0a0a0a">
 </head>
 
 <body>
@@ -17,19 +19,23 @@
 
             <img src="assets/logo.png" alt="CineMax" class="logo">
 
-            <h2>Iniciar Sesión</h2>
-            <p class="subtitulo">Ingresá tus datos para entrar al sistema</p>
+            <h2>Iniciar Sesion</h2>
+            <p class="subtitulo">Ingresa tus datos para entrar al sistema</p>
+
+            <button type="button" class="estado-servidor" id="estadoServidor">Verificando servidor...</button>
+
+            <a class="btn-servidor" id="abrirServidor" href="http://127.0.0.1:5000/login.html">Abrir el sistema desde el servidor</a>
 
             <form id="formLogin">
 
                 <div class="campo">
                     <label for="usuario">Usuario</label>
-                    <input type="text" id="usuario" name="usuario" placeholder="Ingresá tu usuario" required>
+                    <input type="text" id="usuario" name="usuario" placeholder="Ingresa tu usuario" required>
                 </div>
 
                 <div class="campo">
                     <label for="contrasena">Contraseña</label>
-                    <input type="password" id="contrasena" name="contrasena" placeholder="Ingresá tu contraseña" required>
+                    <input type="password" id="contrasena" name="contrasena" placeholder="Ingresa tu contraseña" required>
                 </div>
 
                 <div class="opciones">
@@ -42,7 +48,7 @@
 
                 <p class="mensaje-error" id="mensajeError"></p>
 
-                <button type="submit" class="btn-ingresar">Iniciar Sesión</button>
+                <button type="submit" class="btn-ingresar">Iniciar Sesion</button>
 
                 <div class="separador">
                     <span>o</span>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineMax - Usuarios</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/iconos.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <meta name="theme-color" content="#0a0a0a">
+</head>
+
+<body>
+
+    <div class="dashboard">
+
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <img src="assets/logo.png" alt="CineMax">
+            </div>
+            <nav class="menu">
+                <span class="menu-grupo">Operacion</span>
+                <a href="dashboard.html" class="menu-item">Inicio</a>
+                <a href="cartelera.html" class="menu-item">Cartelera</a>
+                <a href="horarios.html" class="menu-item">Horarios</a>
+                <a href="precios.html" class="menu-item">Precios</a>
+                <a href="precios.html" class="menu-item">Dulceria</a>
+                <span class="menu-grupo">Sistema</span>
+
+                <a href="reportes.html" class="menu-item">Reportes</a>
+                <a href="usuarios.html" class="menu-item activo">Usuarios</a>
+            </nav>
+            <div class="sidebar-abajo">
+                <div class="sidebar-usuario">
+                    <span class="avatar" id="avatarUsuario">AD</span>
+                    <div class="usuario-datos">
+                        <strong class="admin-nombre">Admin</strong>
+                        <span id="rolUsuario">Administrador</span>
+                    </div>
+                </div>
+                <a href="login.html" class="menu-item salir">Cerrar sesion</a>
+            </div>
+        </aside>
+
+        <div class="contenido">
+
+            <header class="topbar">
+                <input type="text" class="buscador" placeholder="Buscar usuario...">
+                <div class="topbar-derecha">
+                    <button class="btn-icono" title="Notificaciones"><i class="icono icono-campana"></i></button>
+                    <div class="admin">
+                        <span class="admin-punto"></span>
+                        <span class="admin-rol">Administrador</span>
+                    </div>
+                </div>
+            </header>
+
+            <main class="principal">
+                <h1>Gestion de Usuarios</h1>
+                <p class="fecha">Altas y bajas de las cuentas que acceden al sistema.</p>
+
+                <div class="bloque" style="margin-bottom: 2rem;">
+                    <h2 class="bloque-titulo">Agregar Nuevo Usuario</h2>
+
+                    <form id="formUsuario" class="form-grid">
+                        <div class="campo-form">
+                            <label for="usuario">Usuario</label>
+                            <input type="text" id="usuario" placeholder="recepcion" required>
+                        </div>
+
+                        <div class="campo-form">
+                            <label for="contrasena">Contraseña</label>
+                            <input type="password" id="contrasena" placeholder="Minimo 6 caracteres" required>
+                        </div>
+
+                        <div class="campo-form">
+                            <label for="rol">Rol</label>
+                            <select id="rol">
+                                <option value="user">Usuario</option>
+                                <option value="admin">Administrador</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn-primario">Agregar Usuario</button>
+                    </form>
+
+                    <p class="mensaje" id="mensajeFormulario"></p>
+                </div>
+
+                <div class="bloque">
+                    <h2 class="bloque-titulo">Usuarios del Sistema</h2>
+
+                    <div class="tabla-scroll">
+                        <table class="tabla">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Usuario</th>
+                                    <th>Rol</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablaUsuarios"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+
+        </div>
+
+    </div>
+
+    <script src="js/sesion.js"></script>
+
+    <script>
+        const API = (location.port === '5000') ? '' : 'http://127.0.0.1:5000';
+
+        function cargarUsuarios() {
+            fetch(API + '/api/usuarios')
+                .then(function (respuesta) {
+                    return respuesta.json();
+                })
+                .then(function (usuarios) {
+                    const tabla = document.getElementById('tablaUsuarios');
+                    tabla.innerHTML = '';
+
+                    for (let i = 0; i < usuarios.length; i++) {
+                        const usuario = usuarios[i];
+                        let claseRol = 'badge-info';
+                        let nombreRol = 'Usuario';
+
+                        if (usuario.rol === 'admin') {
+                            claseRol = 'badge-error';
+                            nombreRol = 'Administrador';
+                        }
+
+                        tabla.innerHTML += '<tr>' +
+                            '<td>' + usuario.id + '</td>' +
+                            '<td class="destacado">' + usuario.usuario + '</td>' +
+                            '<td><span class="badge ' + claseRol + '">' + nombreRol + '</span></td>' +
+                            '<td><button type="button" class="btn-chico" onclick="borrarUsuario(' + usuario.id + ')">Eliminar</button></td>' +
+                            '</tr>';
+                    }
+
+                    if (usuarios.length === 0) {
+                        tabla.innerHTML = '<tr><td class="tabla-vacia" colspan="4">No hay usuarios cargados</td></tr>';
+                    }
+                })
+                .catch(function () {
+                    console.log('Error al cargar los usuarios');
+                });
+        }
+
+        function borrarUsuario(idUsuario) {
+            const mensaje = document.getElementById('mensajeFormulario');
+
+            if (confirm('Seguro que queres eliminar este usuario?') === false) {
+                return;
+            }
+
+            fetch(API + '/api/usuarios/' + idUsuario, {
+                method: 'DELETE'
+            })
+                .then(function (respuesta) {
+                    return respuesta.json().then(function (datos) {
+                        if (respuesta.ok) {
+                            mensaje.textContent = 'Usuario eliminado';
+                            mensaje.className = 'mensaje ok';
+                            cargarUsuarios();
+                        } else {
+                            mensaje.textContent = datos.error;
+                            mensaje.className = 'mensaje error';
+                        }
+                    });
+                })
+                .catch(function () {
+                    mensaje.textContent = 'Error: el servidor no esta encendido';
+                    mensaje.className = 'mensaje error';
+                });
+        }
+
+        document.getElementById('formUsuario').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const mensaje = document.getElementById('mensajeFormulario');
+
+            const nuevoUsuario = {
+                usuario: document.getElementById('usuario').value,
+                contrasena: document.getElementById('contrasena').value,
+                rol: document.getElementById('rol').value
+            };
+
+            fetch(API + '/api/usuarios', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(nuevoUsuario)
+            })
+                .then(function (respuesta) {
+                    return respuesta.json().then(function (datos) {
+                        if (respuesta.ok) {
+                            document.getElementById('formUsuario').reset();
+                            mensaje.textContent = 'Usuario agregado correctamente';
+                            mensaje.className = 'mensaje ok';
+                            cargarUsuarios();
+                        } else {
+                            mensaje.textContent = datos.error;
+                            mensaje.className = 'mensaje error';
+                        }
+                    });
+                })
+                .catch(function () {
+                    mensaje.textContent = 'Error: el servidor no esta encendido';
+                    mensaje.className = 'mensaje error';
+                });
+        });
+
+        cargarUsuarios();
+    </script>
+
+</body>
+
+</html>

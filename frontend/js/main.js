@@ -1,5 +1,3 @@
-// ==================== CARRUSEL ====================
-
 const slides = document.querySelectorAll('.slide');
 const puntos = document.querySelectorAll('.punto');
 const flechaIzq = document.getElementById('flechaIzq');
@@ -9,8 +7,10 @@ let slideActual = 0;
 let autoplay;
 
 function mostrarSlide(indice) {
-    slides.forEach(s => s.classList.remove('activo'));
-    puntos.forEach(p => p.classList.remove('activo'));
+    for (let i = 0; i < slides.length; i++) {
+        slides[i].classList.remove('activo');
+        puntos[i].classList.remove('activo');
+    }
 
     slides[indice].classList.add('activo');
     puntos[indice].classList.add('activo');
@@ -20,49 +20,83 @@ function mostrarSlide(indice) {
 
 function siguienteSlide() {
     let siguiente = slideActual + 1;
-    if (siguiente >= slides.length) siguiente = 0;
+
+    if (siguiente >= slides.length) {
+        siguiente = 0;
+    }
+
     mostrarSlide(siguiente);
 }
 
 function anteriorSlide() {
     let anterior = slideActual - 1;
-    if (anterior < 0) anterior = slides.length - 1;
+
+    if (anterior < 0) {
+        anterior = slides.length - 1;
+    }
+
     mostrarSlide(anterior);
 }
 
-// Reinicia el temporizador cada vez que el usuario toca una flecha
 function reiniciarAutoplay() {
     clearInterval(autoplay);
     autoplay = setInterval(siguienteSlide, 6000);
 }
 
-// Flechas
-flechaDer.addEventListener('click', () => {
+flechaDer.addEventListener('click', function () {
     siguienteSlide();
     reiniciarAutoplay();
 });
 
-flechaIzq.addEventListener('click', () => {
+flechaIzq.addEventListener('click', function () {
     anteriorSlide();
     reiniciarAutoplay();
 });
 
-// Puntitos
-puntos.forEach((punto, i) => {
-    punto.addEventListener('click', () => {
+for (let i = 0; i < puntos.length; i++) {
+    puntos[i].addEventListener('click', function () {
         mostrarSlide(i);
         reiniciarAutoplay();
     });
-});
+}
 
-// Arranca el autoplay
 autoplay = setInterval(siguienteSlide, 6000);
-
-// ==================== MENU HAMBURGUESA ====================
 
 const btnHamburguesa = document.getElementById('btnHamburguesa');
 const menuMobile = document.getElementById('menuMobile');
 
-btnHamburguesa.addEventListener('click', () => {
+btnHamburguesa.addEventListener('click', function () {
     menuMobile.classList.toggle('abierto');
 });
+
+const usuarioGuardado = sessionStorage.getItem('usuario');
+
+if (usuarioGuardado) {
+    const nombreUsuario = usuarioGuardado.charAt(0).toUpperCase() + usuarioGuardado.slice(1);
+
+    const chip = document.getElementById('usuarioChip');
+    chip.textContent = nombreUsuario;
+    chip.className = 'usuario-chip visible';
+
+    document.getElementById('btnLogin').className = 'btn-login oculto';
+
+    const botonSalir = document.getElementById('btnSalir');
+    botonSalir.className = 'btn-salir visible';
+
+    const menuUsuario = document.getElementById('menuUsuario');
+    menuUsuario.textContent = 'Sesion iniciada como ' + nombreUsuario;
+    menuUsuario.className = 'menu-mobile-usuario visible';
+
+    const menuAccion = document.getElementById('menuAccion');
+    menuAccion.textContent = 'Cerrar Sesion';
+    menuAccion.href = '#';
+
+    botonSalir.addEventListener('click', cerrarSesion);
+    menuAccion.addEventListener('click', cerrarSesion);
+}
+
+function cerrarSesion(evento) {
+    evento.preventDefault();
+    sessionStorage.clear();
+    location.reload();
+}

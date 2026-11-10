@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineMax - Dulceria</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/iconos.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <meta name="theme-color" content="#0a0a0a">
+</head>
+
+<body>
+
+    <div class="dashboard">
+
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <img src="assets/logo.png" alt="CineMax">
+            </div>
+            <nav class="menu">
+                <span class="menu-grupo">Operacion</span>
+                <a href="dashboard.html" class="menu-item">Inicio</a>
+                <a href="cartelera.html" class="menu-item">Cartelera</a>
+                <a href="horarios.html" class="menu-item">Horarios</a>
+                <a href="precios.html" class="menu-item">Precios</a>
+                <a href="precios.html" class="menu-item activo">Dulceria</a>
+                <span class="menu-grupo">Sistema</span>
+
+                <a href="reportes.html" class="menu-item">Reportes</a>
+                <a href="usuarios.html" class="menu-item">Usuarios</a>
+            </nav>
+            <div class="sidebar-abajo">
+                <div class="sidebar-usuario">
+                    <span class="avatar" id="avatarUsuario">AD</span>
+                    <div class="usuario-datos">
+                        <strong class="admin-nombre">Admin</strong>
+                        <span id="rolUsuario">Administrador</span>
+                    </div>
+                </div>
+                <a href="login.html" class="menu-item salir">Cerrar sesion</a>
+            </div>
+        </aside>
+
+        <div class="contenido">
+
+            <header class="topbar">
+                <input type="text" class="buscador" placeholder="Buscar combo...">
+                <div class="topbar-derecha">
+                    <button class="btn-icono" title="Notificaciones"><i class="icono icono-campana"></i></button>
+                    <div class="admin">
+                        <span class="admin-punto"></span>
+                        <span class="admin-rol">Administrador</span>
+                    </div>
+                </div>
+            </header>
+
+            <main class="principal">
+                <h1>Dulceria</h1>
+                <p class="fecha">Administra los combos y el stock de la confiteria.</p>
+
+                <div class="bloque" style="margin-bottom: 2rem;">
+                    <h2 class="bloque-titulo">Agregar Nuevo Combo</h2>
+
+                    <form id="formCombo" class="form-grid">
+                        <div class="campo-form">
+                            <label for="nombre">Nombre</label>
+                            <input type="text" id="nombre" placeholder="Combo Clasico" required>
+                        </div>
+
+                        <div class="campo-form">
+                            <label for="precio">Precio</label>
+                            <input type="number" id="precio" placeholder="8500" min="0" required>
+                        </div>
+
+                        <div class="campo-form">
+                            <label for="stock">Stock</label>
+                            <input type="number" id="stock" placeholder="40" min="0" required>
+                        </div>
+
+                        <button type="submit" class="btn-primario">Agregar Combo</button>
+                    </form>
+
+                    <p class="mensaje" id="mensajeFormulario"></p>
+                </div>
+
+                <div class="bloque">
+                    <h2 class="bloque-titulo">Combos Disponibles</h2>
+
+                    <div class="tabla-scroll">
+                        <table class="tabla">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Combo</th>
+                                    <th class="num">Precio</th>
+                                    <th class="num">Stock</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablaCombos"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+
+        </div>
+
+    </div>
+
+    <script src="js/sesion.js"></script>
+
+    <script>
+        const API = (location.port === '5000') ? '' : 'http://127.0.0.1:5000';
+
+        function cargarCombos() {
+            fetch(API + '/api/combos')
+                .then(function (respuesta) {
+                    return respuesta.json();
+                })
+                .then(function (combos) {
+                    const tabla = document.getElementById('tablaCombos');
+                    tabla.innerHTML = '';
+
+                    for (let i = 0; i < combos.length; i++) {
+                        const combo = combos[i];
+                        let estado = 'Disponible';
+
+                        if (combo.stock === 0) {
+                            estado = 'Sin stock';
+                        } else if (combo.stock <= 10) {
+                            estado = 'Stock bajo';
+                        }
+
+                        tabla.innerHTML += '<tr>' +
+                            '<td>' + combo.id + '</td>' +
+                            '<td class="destacado">' + combo.nombre + '</td>' +
+                            '<td class="num">$' + Number(combo.precio).toLocaleString('es-AR') + '</td>' +
+                            '<td><div class="campo-stock"><input type="number" id="stock-' + combo.id + '" value="' + combo.stock + '" min="0"><button type="button" class="btn-chico" onclick="actualizarStock(' + combo.id + ')">Guardar</button></div></td>' +
+                            '<td>' + estado + '</td>' +
+                            '</tr>';
+                    }
+
+                    if (combos.length === 0) {
+                        tabla.innerHTML = '<tr><td class="tabla-vacia" colspan="5">No hay combos cargados</td></tr>';
+                    }
+                })
+                .catch(function () {
+                    console.log('Error al cargar los combos');
+                });
+        }
+
+        document.getElementById('formCombo').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const mensaje = document.getElementById('mensajeFormulario');
+
+            const nuevoCombo = {
+                nombre: document.getElementById('nombre').value,
+                precio: document.getElementById('precio').value,
+                stock: document.getElementById('stock').value
+            };
+
+            fetch(API + '/api/combos', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(nuevoCombo)
+            })
+                .then(function (respuesta) {
+                    if (respuesta.ok) {
+                        document.getElementById('formCombo').reset();
+                        mensaje.textContent = 'Combo agregado correctamente';
+                        mensaje.className = 'mensaje ok';
+                        cargarCombos();
+                    } else {
+                        mensaje.textContent = 'No se pudo agregar el combo';
+                        mensaje.className = 'mensaje error';
+                    }
+                })
+                .catch(function () {
+                    mensaje.textContent = 'Error: el servidor Python no esta encendido';
+                    mensaje.className = 'mensaje error';
+                });
+        });
+
+        function actualizarStock(idCombo) {
+            const mensaje = document.getElementById('mensajeFormulario');
+            const input = document.getElementById('stock-' + idCombo);
+            const nuevoStock = input.value;
+
+            fetch(API + '/api/combos/' + idCombo, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ stock: nuevoStock })
+            })
+                .then(function (respuesta) {
+                    if (respuesta.ok) {
+                        mensaje.textContent = 'Stock actualizado';
+                        mensaje.className = 'mensaje ok';
+                        cargarCombos();
+                    } else {
+                        mensaje.textContent = 'No se pudo actualizar el stock';
+                        mensaje.className = 'mensaje error';
+                    }
+                })
+                .catch(function () {
+                    mensaje.textContent = 'Error: el servidor no esta encendido';
+                    mensaje.className = 'mensaje error';
+                });
+        }
+
+        cargarCombos();
+    </script>
+
+</body>
+
+</html>

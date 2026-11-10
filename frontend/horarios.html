@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineMax - Horarios</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/iconos.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <meta name="theme-color" content="#0a0a0a">
+</head>
+
+<body>
+
+    <div class="dashboard">
+
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <img src="assets/logo.png" alt="CineMax">
+            </div>
+            <nav class="menu">
+                <span class="menu-grupo">Operacion</span>
+                <a href="dashboard.html" class="menu-item">Inicio</a>
+                <a href="cartelera.html" class="menu-item">Cartelera</a>
+                <a href="horarios.html" class="menu-item activo">Horarios</a>
+                <a href="precios.html" class="menu-item">Precios</a>
+                <a href="precios.html" class="menu-item">Dulceria</a>
+                <span class="menu-grupo">Sistema</span>
+
+                <a href="reportes.html" class="menu-item">Reportes</a>
+                <a href="usuarios.html" class="menu-item">Usuarios</a>
+            </nav>
+            <div class="sidebar-abajo">
+                <div class="sidebar-usuario">
+                    <span class="avatar" id="avatarUsuario">AD</span>
+                    <div class="usuario-datos">
+                        <strong class="admin-nombre">Admin</strong>
+                        <span id="rolUsuario">Administrador</span>
+                    </div>
+                </div>
+                <a href="login.html" class="menu-item salir">Cerrar sesion</a>
+            </div>
+        </aside>
+
+        <div class="contenido">
+
+            <header class="topbar">
+                <input type="text" class="buscador" placeholder="Buscar pelicula, sala, funcion...">
+                <div class="topbar-derecha">
+                    <button class="btn-icono" title="Notificaciones"><i class="icono icono-campana"></i></button>
+                    <div class="admin">
+                        <span class="admin-punto"></span>
+                        <span class="admin-rol">Administrador</span>
+                    </div>
+                </div>
+            </header>
+
+            <main class="principal">
+                <h1>Gestion de Horarios</h1>
+                <p class="fecha">Programa las funciones del dia y revisa la grilla actual.</p>
+
+                <div class="bloque" style="margin-bottom: 2rem;">
+                    <h2 class="bloque-titulo">Agregar Nueva Funcion</h2>
+
+                    <form id="formFuncion" class="form-grid">
+                        <div class="campo-form">
+                            <label for="idPelicula">Pelicula</label>
+                            <select id="idPelicula" required>
+                                <option value="">Cargando peliculas...</option>
+                            </select>
+                        </div>
+
+                        <div class="campo-form">
+                            <label for="idSala">Sala</label>
+                            <select id="idSala" required>
+                                <option value="">Cargando salas...</option>
+                            </select>
+                        </div>
+
+                        <div class="campo-form">
+                            <label for="fecha">Fecha</label>
+                            <input type="date" id="fecha" required>
+                        </div>
+
+                        <div class="campo-form">
+                            <label for="hora">Hora</label>
+                            <input type="time" id="hora" required>
+                        </div>
+
+                        <div class="campo-form">
+                            <label for="precio">Precio</label>
+                            <input type="number" id="precio" placeholder="5000" min="0" required>
+                        </div>
+
+                        <button type="submit" class="btn-primario">Agregar Funcion</button>
+                    </form>
+
+                    <p class="mensaje" id="mensajeFormulario"></p>
+                </div>
+
+                <div class="bloque">
+                    <h2 class="bloque-titulo">Grilla Actual</h2>
+
+                    <div class="tabla-scroll">
+                        <table class="tabla">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Pelicula</th>
+                                    <th>Sala</th>
+                                    <th>Fecha</th>
+                                    <th>Hora</th>
+                                    <th class="num">Precio</th>
+                                    <th class="num">Entradas</th>
+                                    <th class="num">Ocupacion</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablaFunciones"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+
+        </div>
+
+    </div>
+
+    <script src="js/sesion.js"></script>
+
+    <script>
+        const API = (location.port === '5000') ? '' : 'http://127.0.0.1:5000';
+
+        function cargarPeliculas() {
+            fetch(API + '/api/peliculas')
+                .then(function (respuesta) {
+                    return respuesta.json();
+                })
+                .then(function (peliculas) {
+                    const select = document.getElementById('idPelicula');
+                    select.innerHTML = '<option value="">Elegi una pelicula</option>';
+
+                    for (let i = 0; i < peliculas.length; i++) {
+                        select.innerHTML += '<option value="' + peliculas[i].id + '">' + peliculas[i].titulo + '</option>';
+                    }
+                })
+                .catch(function () {
+                    console.log('Error al cargar las peliculas');
+                });
+        }
+
+        function cargarSalas() {
+            fetch(API + '/api/salas')
+                .then(function (respuesta) {
+                    return respuesta.json();
+                })
+                .then(function (salas) {
+                    const select = document.getElementById('idSala');
+                    select.innerHTML = '<option value="">Elegi una sala</option>';
+
+                    for (let i = 0; i < salas.length; i++) {
+                        select.innerHTML += '<option value="' + salas[i].id + '">' + salas[i].nombre + ' (' + salas[i].tipo + ')</option>';
+                    }
+                })
+                .catch(function () {
+                    console.log('Error al cargar las salas');
+                });
+        }
+
+        function cargarFunciones() {
+            fetch(API + '/api/funciones')
+                .then(function (respuesta) {
+                    return respuesta.json();
+                })
+                .then(function (funciones) {
+                    const tabla = document.getElementById('tablaFunciones');
+                    tabla.innerHTML = '';
+
+                    for (let i = 0; i < funciones.length; i++) {
+                        const funcion = funciones[i];
+                        let claseOcupacion = 'badge-ok';
+
+                        if (funcion.ocupacion >= 90) {
+                            claseOcupacion = 'badge-error';
+                        } else if (funcion.ocupacion >= 70) {
+                            claseOcupacion = 'badge-warn';
+                        }
+
+                        tabla.innerHTML += '<tr>' +
+                            '<td>' + funcion.id + '</td>' +
+                            '<td class="destacado">' + funcion.titulo + '</td>' +
+                            '<td>' + funcion.sala + '</td>' +
+                            '<td>' + funcion.fecha + '</td>' +
+                            '<td>' + funcion.hora + '</td>' +
+                            '<td class="num">$' + Number(funcion.precio).toLocaleString('es-AR') + '</td>' +
+                            '<td class="num">' + funcion.entradas_vendidas + '</td>' +
+                            '<td class="num"><span class="badge ' + claseOcupacion + '">' + funcion.ocupacion + '%</span></td>' +
+                            '<td><button type="button" class="btn-chico" onclick="borrarFuncion(' + funcion.id + ')">Eliminar</button></td>' +
+                            '</tr>';
+                    }
+
+                    if (funciones.length === 0) {
+                        tabla.innerHTML = '<tr><td class="tabla-vacia" colspan="9">No hay funciones cargadas</td></tr>';
+                    }
+                })
+                .catch(function () {
+                    console.log('Error al cargar las funciones');
+                });
+        }
+
+        document.getElementById('formFuncion').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const mensaje = document.getElementById('mensajeFormulario');
+
+            const nuevaFuncion = {
+                id_pelicula: document.getElementById('idPelicula').value,
+                id_sala: document.getElementById('idSala').value,
+                fecha: document.getElementById('fecha').value,
+                hora: document.getElementById('hora').value,
+                precio: document.getElementById('precio').value
+            };
+
+            fetch(API + '/api/funciones', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(nuevaFuncion)
+            })
+                .then(function (respuesta) {
+                    if (respuesta.ok) {
+                        document.getElementById('formFuncion').reset();
+                        mensaje.textContent = 'Funcion agregada correctamente';
+                        mensaje.className = 'mensaje ok';
+                        cargarFunciones();
+                    } else {
+                        mensaje.textContent = 'No se pudo agregar la funcion';
+                        mensaje.className = 'mensaje error';
+                    }
+                })
+                .catch(function () {
+                    mensaje.textContent = 'Error: el servidor Python no esta encendido';
+                    mensaje.className = 'mensaje error';
+                });
+        });
+
+        function borrarFuncion(idFuncion) {
+            const mensaje = document.getElementById('mensajeFormulario');
+
+            if (confirm('Seguro que queres eliminar esta funcion?') === false) {
+                return;
+            }
+
+            fetch(API + '/api/funciones/' + idFuncion, {
+                method: 'DELETE'
+            })
+                .then(function (respuesta) {
+                    return respuesta.json().then(function (datos) {
+                        if (respuesta.ok) {
+                            mensaje.textContent = 'Funcion eliminada';
+                            mensaje.className = 'mensaje ok';
+                            cargarFunciones();
+                        } else {
+                            mensaje.textContent = datos.error;
+                            mensaje.className = 'mensaje error';
+                        }
+                    });
+                })
+                .catch(function () {
+                    mensaje.textContent = 'Error: el servidor no esta encendido';
+                    mensaje.className = 'mensaje error';
+                });
+        }
+
+        const hoy = new Date();
+        const mes = String(hoy.getMonth() + 1).padStart(2, '0');
+        const dia = String(hoy.getDate()).padStart(2, '0');
+        document.getElementById('fecha').value = hoy.getFullYear() + '-' + mes + '-' + dia;
+
+        cargarPeliculas();
+        cargarSalas();
+        cargarFunciones();
+    </script>
+
+</body>
+
+</html>

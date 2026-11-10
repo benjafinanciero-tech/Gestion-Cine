@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineMax - Reportes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/iconos.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <meta name="theme-color" content="#0a0a0a">
+</head>
+
+<body>
+
+    <div class="dashboard">
+
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <img src="assets/logo.png" alt="CineMax">
+            </div>
+            <nav class="menu">
+                <span class="menu-grupo">Operacion</span>
+                <a href="dashboard.html" class="menu-item">Inicio</a>
+                <a href="cartelera.html" class="menu-item">Cartelera</a>
+                <a href="horarios.html" class="menu-item">Horarios</a>
+                <a href="precios.html" class="menu-item">Precios</a>
+                <a href="precios.html" class="menu-item">Dulceria</a>
+                <span class="menu-grupo">Sistema</span>
+
+                <a href="reportes.html" class="menu-item activo">Reportes</a>
+                <a href="usuarios.html" class="menu-item">Usuarios</a>
+            </nav>
+            <div class="sidebar-abajo">
+                <div class="sidebar-usuario">
+                    <span class="avatar" id="avatarUsuario">AD</span>
+                    <div class="usuario-datos">
+                        <strong class="admin-nombre">Admin</strong>
+                        <span id="rolUsuario">Administrador</span>
+                    </div>
+                </div>
+                <a href="login.html" class="menu-item salir">Cerrar sesion</a>
+            </div>
+        </aside>
+
+        <div class="contenido">
+
+            <header class="topbar">
+                <input type="text" class="buscador" placeholder="Buscar reporte...">
+                <div class="topbar-derecha">
+                    <button class="btn-icono" title="Notificaciones"><i class="icono icono-campana"></i></button>
+                    <div class="admin">
+                        <span class="admin-punto"></span>
+                        <span class="admin-rol">Administrador</span>
+                    </div>
+                </div>
+            </header>
+
+            <main class="principal">
+                <h1>Reportes Generales</h1>
+                <p class="fecha" id="fechaHoy"></p>
+
+                <section class="reportes-grid">
+                    <div class="reporte-card destacada">
+                        <span class="reporte-label">Pelicula mas vista</span>
+                        <span class="reporte-valor" id="peliculaMasVista">-</span>
+                        <span class="reporte-extra" id="entradasPelicula">0 entradas vendidas</span>
+                        <div class="reporte-barra"><span class="reporte-barra-relleno" id="barraPelicula"></span></div>
+                    </div>
+
+                    <div class="reporte-card">
+                        <span class="reporte-label">Recaudacion total</span>
+                        <span class="reporte-valor" id="recaudacionTotal">$0</span>
+                        <span class="reporte-extra">Suma de todas las funciones</span>
+                    </div>
+
+                    <div class="reporte-card">
+                        <span class="reporte-label">Entradas vendidas</span>
+                        <span class="reporte-valor" id="entradasTotales">0</span>
+                        <span class="reporte-extra">Total del sistema</span>
+                    </div>
+                </section>
+
+                <div class="bloque">
+                    <h2 class="bloque-titulo">Resumen del sistema</h2>
+
+                    <div class="tabla-scroll">
+                        <table class="tabla">
+                            <thead>
+                                <tr>
+                                    <th>Dato</th>
+                                    <th class="num">Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Funciones registradas</td>
+                                    <td class="destacado" id="funcionesTotales">0</td>
+                                </tr>
+                                <tr>
+                                    <td>Entradas de la pelicula mas vista</td>
+                                    <td class="destacado" id="entradasTop">0</td>
+                                </tr>
+                                <tr>
+                                    <td>Promedio por funcion</td>
+                                    <td class="destacado" id="promedioFuncion">$0</td>
+                                </tr>
+                                <tr>
+                                    <td>Ocupacion promedio de las salas</td>
+                                    <td class="destacado" id="ocupacionPromedio">0%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div style="margin-top: 1.5rem;">
+                        <button type="button" class="btn-primario" id="btnExportar">Exportar a PDF</button>
+                    </div>
+                </div>
+            </main>
+
+        </div>
+
+    </div>
+
+    <script src="js/sesion.js"></script>
+
+    <script>
+        const API = (location.port === '5000') ? '' : 'http://127.0.0.1:5000';
+
+        const fecha = new Date();
+        const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('fechaHoy').textContent = fecha.toLocaleDateString('es-AR', opciones);
+
+        function cargarReportes() {
+            fetch(API + '/api/reportes')
+                .then(function (respuesta) {
+                    return respuesta.json();
+                })
+                .then(function (datos) {
+                    document.getElementById('peliculaMasVista').textContent = datos.pelicula_mas_vista;
+                    document.getElementById('entradasPelicula').textContent = datos.entradas_pelicula.toLocaleString('es-AR') + ' entradas vendidas';
+
+                    let participacion = 0;
+
+                    if (datos.entradas_vendidas > 0) {
+                        participacion = Math.round((datos.entradas_pelicula / datos.entradas_vendidas) * 100);
+                    }
+
+                    document.getElementById('barraPelicula').style.width = participacion + '%';
+                    document.getElementById('recaudacionTotal').textContent = '$' + datos.recaudacion_total.toLocaleString('es-AR');
+                    document.getElementById('entradasTotales').textContent = datos.entradas_vendidas.toLocaleString('es-AR');
+                    document.getElementById('funcionesTotales').textContent = datos.funciones_totales;
+                    document.getElementById('entradasTop').textContent = datos.entradas_pelicula.toLocaleString('es-AR');
+
+                    let promedio = 0;
+
+                    if (datos.funciones_totales > 0) {
+                        promedio = Math.round(datos.recaudacion_total / datos.funciones_totales);
+                    }
+
+                    document.getElementById('promedioFuncion').textContent = '$' + promedio.toLocaleString('es-AR');
+                    document.getElementById('ocupacionPromedio').textContent = datos.ocupacion_promedio + '%';
+                })
+                .catch(function () {
+                    console.log('Error al cargar los reportes');
+                });
+        }
+
+        document.getElementById('btnExportar').addEventListener('click', function () {
+            window.print();
+        });
+
+        cargarReportes();
+    </script>
+
+</body>
+
+</html>

@@ -6,186 +6,198 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CineMax - Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/iconos.css">
     <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <meta name="theme-color" content="#0a0a0a">
 </head>
 
 <body>
 
     <div class="dashboard">
 
-        <!-- ==================== SIDEBAR ==================== -->
         <aside class="sidebar">
-
             <div class="sidebar-logo">
                 <img src="assets/logo.png" alt="CineMax">
             </div>
-
             <nav class="menu">
-                <a href="#" class="menu-item activo">Inicio</a>
-                <a href="#" class="menu-item">Cartelera</a>
-                <a href="#" class="menu-item">Horarios</a>
-                <a href="#" class="menu-item">Precios</a>
-                <a href="#" class="menu-item">Dulcería</a>
-                <a href="#" class="menu-item">Reportes</a>
-                <a href="#" class="menu-item">Usuarios</a>
-                <a href="#" class="menu-item">Ajustes</a>
+                <span class="menu-grupo">Operacion</span>
+                <a href="dashboard.html" class="menu-item activo">Inicio</a>
+                <a href="cartelera.html" class="menu-item">Cartelera</a>
+                <a href="horarios.html" class="menu-item">Horarios</a>
+                <a href="precios.html" class="menu-item">Precios</a>
+                <a href="precios.html" class="menu-item">Dulceria</a>
+                <span class="menu-grupo">Sistema</span>
+
+                <a href="reportes.html" class="menu-item">Reportes</a>
+                <a href="usuarios.html" class="menu-item">Usuarios</a>
             </nav>
-
             <div class="sidebar-abajo">
-                <a href="login.html" class="menu-item salir">Cerrar sesión</a>
-            </div>
-
-        </aside>
-
-        <!-- ==================== CONTENIDO ==================== -->
-        <div class="contenido">
-
-            <!-- TOPBAR -->
-            <header class="topbar">
-
-                <input type="text" class="buscador" placeholder="Buscar película, sala, función...">
-
-                <div class="topbar-derecha">
-                    <button class="btn-icono" title="Notificaciones">🔔</button>
-                    <div class="admin">
-                        <span class="admin-punto"></span>
-                        <span>Admin</span>
+                <div class="sidebar-usuario">
+                    <span class="avatar" id="avatarUsuario">AD</span>
+                    <div class="usuario-datos">
+                        <strong class="admin-nombre">Admin</strong>
+                        <span id="rolUsuario">Administrador</span>
                     </div>
                 </div>
+                <a href="login.html" class="menu-item salir">Cerrar sesion</a>
+            </div>
+        </aside>
 
+        <div class="contenido">
+
+            <header class="topbar">
+                <input type="text" class="buscador" placeholder="Buscar pelicula, sala, funcion...">
+                <div class="topbar-derecha">
+                    <button class="btn-icono" title="Notificaciones"><i class="icono icono-campana"></i></button>
+                    <div class="admin">
+                        <span class="admin-punto"></span>
+                        <span class="admin-rol">Administrador</span>
+                    </div>
+                </div>
             </header>
 
-            <!-- PRINCIPAL -->
             <main class="principal">
-
-                <h1>Dashboard - Resumen del día</h1>
+                <h1>Dashboard - Resumen del dia</h1>
                 <p class="fecha" id="fechaHoy"></p>
 
-                <!-- STAT CARDS -->
                 <section class="stats">
-
                     <div class="stat-card">
+                        <span class="stat-icono"><i class="icono icono-entrada"></i></span>
                         <span class="stat-label">Entradas de hoy</span>
-                        <span class="stat-valor">4.500</span>
-                        <span class="stat-extra">+12% vs ayer</span>
+                        <span class="stat-valor" id="statEntradas">0</span>
+                        <span class="stat-extra">Entradas vendidas</span>
                     </div>
-
                     <div class="stat-card">
-                        <span class="stat-label">Recaudación</span>
-                        <span class="stat-valor">$850.000</span>
-                        <span class="stat-extra">+8% vs ayer</span>
+                        <span class="stat-icono"><i class="icono icono-dinero"></i></span>
+                        <span class="stat-label">Recaudacion</span>
+                        <span class="stat-valor" id="statRecaudacion">$0</span>
+                        <span class="stat-extra">Total en pesos</span>
                     </div>
-
                     <div class="stat-card">
-                        <span class="stat-label">Ocupación</span>
-                        <span class="stat-valor">82%</span>
-                        <span class="stat-extra">5 salas activas</span>
+                        <span class="stat-icono"><i class="icono icono-butaca"></i></span>
+                        <span class="stat-label">Ocupacion</span>
+                        <span class="stat-valor" id="statOcupacion">0%</span>
+                        <span class="stat-extra">Sobre la capacidad total</span>
                     </div>
-
                     <div class="stat-card">
+                        <span class="stat-icono"><i class="icono icono-pelicula"></i></span>
                         <span class="stat-label">Funciones de hoy</span>
-                        <span class="stat-valor">14</span>
-                        <span class="stat-extra">3 próximas</span>
+                        <span class="stat-valor" id="statFunciones">0</span>
+                        <span class="stat-extra" id="statProximas">0 proximas</span>
                     </div>
-
                 </section>
 
-                <!-- DOS COLUMNAS -->
                 <section class="columnas">
 
-                    <!-- PRÓXIMAS FUNCIONES -->
                     <div class="bloque">
-                        <h2 class="bloque-titulo">Próximas funciones</h2>
-
-                        <ul class="lista-funciones">
-                            <li>
-                                <div class="funcion-info">
-                                    <strong>Sala 1</strong>
-                                    <span>Dune: Parte Dos</span>
-                                </div>
-                                <div class="funcion-hora">20:00 hs</div>
-                                <div class="funcion-ocupacion">80%</div>
-                            </li>
-
-                            <li>
-                                <div class="funcion-info">
-                                    <strong>Sala 2</strong>
-                                    <span>Deadpool & Wolverine</span>
-                                </div>
-                                <div class="funcion-hora">20:30 hs</div>
-                                <div class="funcion-ocupacion">65%</div>
-                            </li>
-
-                            <li>
-                                <div class="funcion-info">
-                                    <strong>Sala 3</strong>
-                                    <span>Intensamente 2</span>
-                                </div>
-                                <div class="funcion-hora">21:00 hs</div>
-                                <div class="funcion-ocupacion">92%</div>
-                            </li>
-
-                            <li>
-                                <div class="funcion-info">
-                                    <strong>Sala 4</strong>
-                                    <span>Alien: Romulus</span>
-                                </div>
-                                <div class="funcion-hora">21:15 hs</div>
-                                <div class="funcion-ocupacion">45%</div>
-                            </li>
-
-                            <li>
-                                <div class="funcion-info">
-                                    <strong>Sala 5</strong>
-                                    <span>Gladiador II</span>
-                                </div>
-                                <div class="funcion-hora">22:00 hs</div>
-                                <div class="funcion-ocupacion">70%</div>
-                            </li>
-                        </ul>
+                        <h2 class="bloque-titulo">Proximas funciones</h2>
+                        <ul class="lista-funciones" id="listaFunciones"></ul>
                     </div>
 
-                    <!-- ALERTAS -->
                     <div class="bloque">
                         <h2 class="bloque-titulo">Alertas del sistema</h2>
-
-                        <ul class="lista-alertas">
-                            <li class="alerta alerta-error">
-                                <strong>Proyector sala 3</strong>
-                                <span>Mantenimiento pendiente</span>
-                            </li>
-
-                            <li class="alerta alerta-warn">
-                                <strong>Stock dulcería</strong>
-                                <span>Pochoclos por debajo del mínimo</span>
-                            </li>
-
-                            <li class="alerta alerta-info">
-                                <strong>Backup diario</strong>
-                                <span>Última copia hace 6 horas</span>
-                            </li>
-                        </ul>
+                        <ul class="lista-alertas" id="listaAlertas"></ul>
                     </div>
 
                 </section>
-
             </main>
 
         </div>
 
     </div>
 
+    <script src="js/sesion.js"></script>
+
     <script>
-        // Muestra la fecha actual arriba del dashboard
+        const API = (location.port === '5000') ? '' : 'http://127.0.0.1:5000';
+
         const fecha = new Date();
-        const opciones = {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        };
-        document.getElementById('fechaHoy').textContent =
-            fecha.toLocaleDateString('es-AR', opciones);
+        const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('fechaHoy').textContent = fecha.toLocaleDateString('es-AR', opciones);
+
+        function cargarEstadisticas() {
+            fetch(API + '/api/estadisticas')
+                .then(function (respuesta) {
+                    return respuesta.json();
+                })
+                .then(function (datos) {
+                    document.getElementById('statEntradas').textContent = datos.entradas_hoy.toLocaleString('es-AR');
+                    document.getElementById('statRecaudacion').textContent = '$' + datos.recaudacion_hoy.toLocaleString('es-AR');
+                    document.getElementById('statOcupacion').textContent = datos.ocupacion + '%';
+                    document.getElementById('statFunciones').textContent = datos.funciones_hoy;
+
+                    const funciones = datos.proximas_funciones;
+                    const lista = document.getElementById('listaFunciones');
+                    lista.innerHTML = '';
+
+                    for (let i = 0; i < funciones.length; i++) {
+                        const funcion = funciones[i];
+                        let claseOcupacion = 'ocupacion-ok';
+
+                        if (funcion.ocupacion >= 90) {
+                            claseOcupacion = 'ocupacion-alta';
+                        } else if (funcion.ocupacion >= 70) {
+                            claseOcupacion = 'ocupacion-media';
+                        }
+
+                        lista.innerHTML += '<li>' +
+                            '<div class="funcion-info"><strong>' + funcion.sala + '</strong><span>' + funcion.titulo + '</span></div>' +
+                            '<div class="funcion-hora">' + funcion.hora + ' hs</div>' +
+                            '<div class="funcion-ocupacion ' + claseOcupacion + '">' + funcion.ocupacion + '%</div>' +
+                            '</li>';
+                    }
+
+                    document.getElementById('statProximas').textContent = funciones.length + ' proximas';
+
+                    if (funciones.length === 0) {
+                        lista.innerHTML = '<li><div class="funcion-info"><span>No hay funciones cargadas</span></div></li>';
+                    }
+                })
+                .catch(function () {
+                    console.log('Error al cargar las estadisticas: revisa si app.py esta encendido');
+                });
+        }
+
+        function cargarAlertas() {
+            fetch(API + '/api/combos')
+                .then(function (respuesta) {
+                    return respuesta.json();
+                })
+                .then(function (combos) {
+                    const lista = document.getElementById('listaAlertas');
+                    lista.innerHTML = '';
+
+                    let avisos = 0;
+
+                    for (let i = 0; i < combos.length; i++) {
+                        const combo = combos[i];
+
+                        if (combo.stock <= 10) {
+                            let clase = 'alerta-warn';
+                            let detalle = 'Quedan ' + combo.stock + ' unidades';
+
+                            if (combo.stock === 0) {
+                                clase = 'alerta-error';
+                                detalle = 'Sin stock disponible';
+                            }
+
+                            lista.innerHTML += '<li class="alerta ' + clase + '"><strong>' + combo.nombre + '</strong><span>' + detalle + '</span></li>';
+                            avisos++;
+                        }
+                    }
+
+                    if (avisos === 0) {
+                        lista.innerHTML = '<li class="alerta alerta-info"><strong>Dulceria</strong><span>Todo el stock esta en orden</span></li>';
+                    }
+                })
+                .catch(function () {
+                    console.log('Error al cargar las alertas');
+                });
+        }
+
+        cargarEstadisticas();
+        cargarAlertas();
     </script>
 
 </body>
